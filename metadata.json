@@ -1,0 +1,6 @@
+{
+  "name": "Copy of Dark Content",
+  "description": "A web application for displaying a curated list of videos. An authenticated admin can manage the video content.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

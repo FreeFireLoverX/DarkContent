@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dark Content</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'brand-start': '#00bfff', 
+              'brand-end': '#8a2be2',
+              'brand-dark': '#ef4444', // Red-500 for dark theme highlights
+              'base-100': '#f1f5f9',
+              'base-200': '#ffffff',
+              'base-300': '#e2e8f0',
+              'content-primary': '#0f172a',
+              'content-secondary': '#64748b',
+
+              // Dark theme colors
+              'dark-base-100': '#020617', // Slate-950
+              'dark-base-200': '#1e293b', // Slate-800
+              'dark-base-300': '#334155', // Slate-700
+              'dark-content-primary': '#f1f5f9', // Slate-100
+              'dark-content-secondary': '#94a3b8', // Slate-400
+            },
+            animation: {
+              'spin': 'spin 1.5s linear infinite',
+              'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'fade-in': 'fade-in 0.5s ease-out forwards',
+              'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
+            },
+            boxShadow: {
+              'glow-red': '0 0 15px 0 rgba(239, 68, 68, 0.4)',
+            },
+            keyframes: {
+              'fade-in': {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              'fade-in-up': {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+            }
+          },
+        },
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.1.1",
+    "react-dom/client": "https://esm.sh/react-dom@19.1.1/client",
+    "react-player/": "https://esm.sh/react-player@2.16.0/",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+    "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js",
+    "@firebase/app": "https://esm.sh/@firebase/app@^0.14.0",
+    "@firebase/firestore": "https://esm.sh/@firebase/firestore@^4.9.0"
+  }
+}
+</script>
+<!-- Add Babel Standalone for in-browser TSX/JSX transpilation -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <!-- Use type="text/babel" and data-type="module" to have Babel transpile the script -->
+    <script type="text/babel" data-type="module" src="/index.tsx"></script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
