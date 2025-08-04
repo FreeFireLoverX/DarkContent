@@ -12,8 +12,8 @@ import { SpinnerIcon, ExclamationTriangleIcon } from './components/icons';
 
 
 // Hardcoded Admin Credentials
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "admin";
+const ADMIN_USERNAME = "SohailFucker";
+const ADMIN_PASSWORD = "AntiFucker";
 
 const LOCAL_STORAGE_KEY_THEME = 'video-dashboard-theme';
 
