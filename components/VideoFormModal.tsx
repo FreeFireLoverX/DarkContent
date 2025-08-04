@@ -35,15 +35,20 @@ const VideoFormModal: React.FC<VideoFormModalProps> = ({ onSave, onClose, videoT
     setError('');
     if (title.trim() && url.trim() && category.trim()) {
       try {
-        new URL(url); // Basic URL validation
-        if (thumbnail) new URL(thumbnail); // Validate thumbnail URL if provided
+        const trimmedUrl = url.trim();
+        const trimmedThumbnail = thumbnail.trim();
+
+        new URL(trimmedUrl); // Basic URL validation
+        if (trimmedThumbnail) {
+          new URL(trimmedThumbnail); // Validate thumbnail URL if provided
+        }
         
         setIsLoading(true);
         const videoData: VideoFormData & { id?: string } = { 
-          title, 
-          url, 
-          category,
-          thumbnail: thumbnail.trim() ? thumbnail.trim() : undefined,
+          title: title.trim(), 
+          url: trimmedUrl, 
+          category: category.trim(),
+          thumbnail: trimmedThumbnail, // Send empty string if no thumbnail, which Firestore allows
         };
         if (isEditing) {
           videoData.id = videoToEdit.id;
