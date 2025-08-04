@@ -33,41 +33,50 @@ const VideoFormModal: React.FC<VideoFormModalProps> = ({ onSave, onClose, videoT
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (title.trim() && url.trim() && category.trim()) {
-      try {
-        const trimmedUrl = url.trim();
-        const trimmedThumbnail = thumbnail.trim();
 
-        new URL(trimmedUrl); // Basic URL validation
-        if (trimmedThumbnail) {
-          new URL(trimmedThumbnail); // Validate thumbnail URL if provided
-        }
-        
-        setIsLoading(true);
-        const videoData: VideoFormData & { id?: string } = { 
-          title: title.trim(), 
-          url: trimmedUrl, 
-          category: category.trim(),
-          thumbnail: trimmedThumbnail, // Send empty string if no thumbnail, which Firestore allows
-        };
-        if (isEditing) {
-          videoData.id = videoToEdit.id;
-        }
-        await onSave(videoData);
-        onClose();
-      } catch (err) {
-        if (err instanceof TypeError) {
-          setError('Please enter valid URLs for the video and/or thumbnail.');
-        } else {
-          const message = err instanceof Error ? err.message : 'An unexpected error occurred.';
-          setError(`Failed to save video. Please try again. (${message})`);
-          console.error("Error saving video:", err);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
+    // Trim all inputs once at the beginning
+    const finalTitle = title.trim();
+    const finalUrl = url.trim();
+    const finalCategory = category.trim();
+    const finalThumbnail = thumbnail.trim();
+
+    if (!finalTitle || !finalUrl || !finalCategory) {
       setError('Please fill in all required fields: title, URL, and category.');
+      return;
+    }
+
+    try {
+      // URL validation
+      new URL(finalUrl);
+      if (finalThumbnail) {
+        new URL(finalThumbnail);
+      }
+
+      setIsLoading(true);
+      const videoData: VideoFormData & { id?: string } = {
+        title: finalTitle,
+        url: finalUrl,
+        category: finalCategory,
+        thumbnail: finalThumbnail, // This is now guaranteed to be a string
+      };
+
+      if (isEditing) {
+        videoData.id = videoToEdit.id;
+      }
+
+      await onSave(videoData);
+      onClose();
+
+    } catch (err) {
+      if (err instanceof TypeError) {
+        setError('Please enter valid URLs for the video and/or thumbnail.');
+      } else {
+        const message = err instanceof Error ? err.message : 'An unexpected error occurred.';
+        setError(`Failed to save video. Please try again. (${message})`);
+        console.error("Error saving video:", err);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
