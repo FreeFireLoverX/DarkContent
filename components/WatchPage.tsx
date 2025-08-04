@@ -17,6 +17,16 @@ const WatchPage: React.FC<WatchPageProps> = ({ video, allVideos, navigate }) => 
     return allVideos.filter(v => v.category === video.category && v.id !== video.id).slice(0, 3);
   }, [allVideos, video]);
 
+  // ✅ Convert TeraBox share link to direct streamable link
+  const videoUrl = useMemo(() => {
+    if (/terabox\.com\/s\//.test(video.url)) {
+      const shareIdMatch = video.url.match(/s\/([a-zA-Z0-9]+)/);
+      const shareId = shareIdMatch ? shareIdMatch[1] : '';
+      return `https://teraboxdrive.com/stream/${shareId}`;
+    }
+    return video.url;
+  }, [video.url]);
+
   const navigateHome = () => {
     navigate('home');
   };
@@ -43,7 +53,7 @@ const WatchPage: React.FC<WatchPageProps> = ({ video, allVideos, navigate }) => 
         <div className="aspect-video bg-black flex items-center justify-center">
           <ReactPlayer
             key={video.id}
-            url={video.url}
+            url={videoUrl}
             controls
             playing
             width="100%"
